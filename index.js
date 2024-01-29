@@ -2,15 +2,28 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { mongoDbUrl } = require("./config/default");
 const morgan = require("morgan");
+const router = require("./routes/index");
 
 const app = express();
 
 // express json middleware
 app.use(express.json());
-// morgan middleware
-app.use(morgan("combined"));
+
+// Custom format function to include request body
+function customFormat(tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    JSON.stringify(req.body), // Log request body as JSON
+    tokens["response-time"](req, res),
+    "ms",
+  ].join(" ");
+}
+app.use(morgan(customFormat));
 
 // app routes
+app.use("/api/v1/", router);
 
 mongoose
   .connect(mongoDbUrl)
