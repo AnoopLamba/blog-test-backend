@@ -3,8 +3,8 @@ const Blog = require("../../models/Blog");
 async function findByCategoryController(req, res, next) {
   try {
     const category = req.params.category;
-    const blogs = await Blog.find({ category: category });
-    if (!blogs) {
+    const blogs = await Blog.find({ category: category, privacy: "public" });
+    if (!blogs || blogs.length == 0) {
       return res.status(404).json({ message: "No blogs found", success: true });
     }
 
