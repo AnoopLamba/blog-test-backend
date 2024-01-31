@@ -2,7 +2,7 @@ const Blog = require("../../models/Blog");
 
 async function getAllBlogsController(req, res, next) {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find({ privacy: "public" });
     if (!blogs) {
       return res.status(404).json({ message: "No blogs found", success: true });
     }

@@ -15,11 +15,9 @@ const blogSchema = new mongoose.Schema({
   },
   creationDate: {
     type: Date,
-    required: true,
   },
   updationDate: {
     type: Date,
-    required: true,
   },
   privacy: {
     type: String,
@@ -29,11 +27,19 @@ const blogSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["gaming", "comedy", "movies"],
+    enum: [
+      "gaming",
+      "comedy",
+      "action",
+      "job",
+      "study",
+      "reality show",
+      "horror",
+    ],
   },
   likes: {
     type: Number,
-    required: true,
+    default: 0,
   },
 });
 

@@ -2,26 +2,8 @@ const Blog = require("../../models/Blog");
 
 async function createBlogController(req, res, next) {
   try {
-    const {
-      title,
-      authorName,
-      ownerName,
-      creationDate,
-      updationDate,
-      privacy,
-      category,
-      likes,
-    } = req.body;
-    if (
-      !title ||
-      !authorName ||
-      !ownerName ||
-      !creationDate ||
-      !updationDate ||
-      !privacy ||
-      !category ||
-      !likes
-    ) {
+    const { title, authorName, ownerName, privacy, category } = req.body;
+    if (!title || !authorName || !ownerName || !privacy || !category) {
       return res
         .status(400)
         .json({ message: "all fields are required", success: true });
@@ -33,9 +15,8 @@ async function createBlogController(req, res, next) {
       ownerName,
       privacy,
       category,
-      likes,
-      creationDate,
-      updationDate,
+      creationDate: new Date(),
+      updationDate: new Date(),
     });
     await blog.save();
 
