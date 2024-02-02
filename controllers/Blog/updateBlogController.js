@@ -4,15 +4,14 @@ async function updateBlogController(req, res, next) {
   try {
     const id = req.params.id;
     const data = req.body;
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findByIdAndUpdate(
+      id,
+      { ...data, updationDate: new Date() },
+      { new: true }
+    );
     if (!blog) {
       return res.status(404).json({ message: "blog not found", success: true });
     }
-
-    for (let key in data) {
-      blog[key] = data[key];
-    }
-    await blog.save();
 
     return res
       .status(200)

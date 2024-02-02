@@ -6,7 +6,7 @@ async function likeBlogController(req, res, next) {
     const { increase } = req.body;
     const blog = await Blog.findByIdAndUpdate(
       id,
-      { $inc: { likes: increase ? 1 : -1 } },
+      { $inc: { likes: increase ? 1 : -1 }, updationDate: new Date() },
       { new: true }
     );
     if (!blog) {
